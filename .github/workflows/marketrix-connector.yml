@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Notify Marketrix
         env:
-          MARKETRIX_WEBHOOK: http://localhost:8080/webhook/ea555c0c-51f9-4b2f-92a4-fd4deb3beda2
+          MARKETRIX_WEBHOOK: https://oophoric-concetta-cistic.ngrok-free.dev/ea555c0c-51f9-4b2f-92a4-fd4deb3beda2
           MARKETRIX_SECRET: ${{ secrets.MARKETRIX_CLIENT_SECRET }}
         run: |
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
