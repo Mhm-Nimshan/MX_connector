@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Notify Marketrix
         env:
-          MARKETRIX_WEBHOOK: http://localhost:8080/webhook/ea555c0c-51f9-4b2f-92a4-fd4deb3beda2
+          MARKETRIX_WEBHOOK: https://oophoric-concetta-cistic.ngrok-free.dev/webhook/ea555c0c-51f9-4b2f-92a4-fd4deb3beda2
           MARKETRIX_SECRET: 6fafe44298c8263e66fe93933d40dcd982b0559a111d01dc09b3b33528e58d5d
         run: |
           PAYLOAD='{"event":"push","repository":"Mhm-Nimshan/MX_connector","ref":"main"}'
