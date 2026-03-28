@@ -9,10 +9,11 @@ jobs:
     steps:
       - name: Notify Marketrix
         env:
-          MARKETRIX_WEBHOOK: https://oophoric-concetta-cistic.ngrok-free.dev/webhook/ea555c0c-51f9-4b2f-92a4-fd4deb3beda2
-          MARKETRIX_SECRET: 6fafe44298c8263e66fe93933d40dcd982b0559a111d01dc09b3b33528e58d5d
+          MARKETRIX_WEBHOOK: http://localhost:8080/webhook/ea555c0c-51f9-4b2f-92a4-fd4deb3beda2
+          MARKETRIX_SECRET: ${{ secrets.MARKETRIX_CLIENT_SECRET }}
         run: |
-          PAYLOAD='{"event":"push","repository":"Mhm-Nimshan/MX_connector","ref":"main"}'
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          PAYLOAD='{"event":"push","repository":"Mhm-Nimshan/MX_connector","ref":"main","workflow":"${{ github.workflow }}","run_id":"${{ github.run_id }}","run_url":"'"$RUN_URL"'","actor":"${{ github.actor }}","sha":"${{ github.sha }}"}'
           SIGNATURE=$(printf "%s" "$PAYLOAD" | openssl dgst -sha256 -hmac "$MARKETRIX_SECRET" -binary | xxd -p -c 256)
           curl -X POST "$MARKETRIX_WEBHOOK" \
             -H "Content-Type: application/json" \
