@@ -1,0 +1,20 @@
+name: Marketrix Trigger - MX Connector
+on:
+  push:
+    branches: [main]
+
+jobs:
+  marketrix-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Marketrix
+        env:
+          MARKETRIX_WEBHOOK: http://localhost:8080/webhook/ea555c0c-51f9-4b2f-92a4-fd4deb3beda2
+          MARKETRIX_SECRET: 6fafe44298c8263e66fe93933d40dcd982b0559a111d01dc09b3b33528e58d5d
+        run: |
+          PAYLOAD='{"event":"push","repository":"Mhm-Nimshan/MX_connector","ref":"main"}'
+          SIGNATURE=$(printf "%s" "$PAYLOAD" | openssl dgst -sha256 -hmac "$MARKETRIX_SECRET" -binary | xxd -p -c 256)
+          curl -X POST "$MARKETRIX_WEBHOOK" \
+            -H "Content-Type: application/json" \
+            -H "X-Webhook-Signature: $SIGNATURE" \
+            -d "$PAYLOAD"
